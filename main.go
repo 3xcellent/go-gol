@@ -11,8 +11,9 @@ import (
 )
 
 const (
-	width              = 500
-	height             = 500
+	width  = 500
+	height = 500
+
 	vertexShaderSource = `
     #version 410
     in vec3 vp;
@@ -31,10 +32,14 @@ const (
 )
 
 var (
-	triangle = []float32{
-		0, 0.5, 0, // top
-		-0.5, -0.5, 0, // left
-		0.5, -0.5, 0, // right
+	square = []float32{
+		-0.5, 0.5, 0, // left-top
+		-0.5, -0.5, 0, // left-bottom
+		0.5, -0.5, 0, // right-bottom
+
+		-0.5, 0.5, 0, // left-top
+		0.5, 0.5, 0, // right-top
+		0.5, -0.5, 0, // right-bottom
 	}
 )
 
@@ -45,7 +50,7 @@ func main() {
 	defer glfw.Terminate()
 
 	program := initOpenGL()
-	vao := makeVao(triangle)
+	vao := makeVao(square)
 
 	for !window.ShouldClose() {
 		draw(vao, window, program)
@@ -74,7 +79,7 @@ func initGlfw() *glfw.Window {
 	return window
 }
 
-// initOpenGL initializes OpenGL and returns an initiliazed program.
+// initOpenGL initializes OpenGL and returns an initialized program.
 func initOpenGL() uint32 {
 	if err := gl.Init(); err != nil {
 		panic(err)
@@ -103,7 +108,7 @@ func draw(vao uint32, window *glfw.Window, program uint32) {
 	gl.UseProgram(program)
 
 	gl.BindVertexArray(vao)
-	gl.DrawArrays(gl.TRIANGLES, 0, int32(len(triangle)/3))
+	gl.DrawArrays(gl.TRIANGLES, 0, int32(len(square)/3))
 
 	glfw.PollEvents()
 	window.SwapBuffers()
