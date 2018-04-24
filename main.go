@@ -13,8 +13,8 @@ import (
 )
 
 const (
-	width  = 720
-	height = 360
+	width  = 720 * 1.5
+	height = 360 * 1.5
 
 	cellSize = 4
 
@@ -185,7 +185,7 @@ func makeCells() [][]*cell {
 			cells[x] = append(cells[x], c)
 		}
 	}
-	log.Println("Grid size: ", len(cells), ",", len(cells[0]))
+	log.Println("Grid size: ", len(cells), "x", len(cells[0]), "=", len(cells)*len(cells[0]))
 
 	return cells
 }
